@@ -8,7 +8,7 @@ from tqdm import tqdm
 from tensorflow.keras.models import load_model
 import numpy as np
 from skimage.registration import optical_flow_tvl1
-from sklearn.externals._pilutil import imresize
+import cv2
 
 from SwissKnife.mrcnn.config import Config
 from SwissKnife.visualization import visualize_full_inference
@@ -109,7 +109,7 @@ def full_inference(
                 masks, coms, molded_img, mask_size=mask_size
             )
             
-            masked_imgs = imresize(masked_imgs[0], downsample_factor)
+            masked_imgs = cv2.imresize(masked_imgs[0], downsample_factor)
             #masked_imgs = imresize(masked_imgs[0][:, :, 0], downsample_factor)
             #masked_imgs = np.expand_dims(masked_imgs, axis=-1)
 
@@ -124,7 +124,7 @@ def full_inference(
             flow_image, flow_mask = apply_all_masks(
                 masks, coms, test, mask_size=mask_size
             )
-            v = imresize(flow_image[0][:, :, 0], downsample_factor)
+            v = cv2.imresize(flow_image[0][:, :, 0], downsample_factor)
             flow_imags = np.expand_dims(v, axis=-1)
 
         except (IndexError, ValueError):
@@ -215,11 +215,11 @@ def full_inference(
             masked_imgs = np.expand_dims(masked_imgs, axis=0)
             for mask_id, img in enumerate(masked_imgs):
                 if posenet_resize_factor:
-                    img = imresize(img, posenet_resize_factor).astype("uint8")
+                    img = cv2.imresize(img, posenet_resize_factor).astype("uint8")
                 heatmaps = networks["PoseNet"].predict(np.expand_dims(img, axis=0))
                 heatmaps = heatmaps[0, :, :, :]
                 if posenet_resize_factor:
-                    heatmaps = imresize(heatmaps, (1 / posenet_resize_factor)).astype(
+                    heatmaps = cv2.imresize(heatmaps, (1 / posenet_resize_factor)).astype(
                         "uint8"
                     )
                 # TODO: merge with section in posestimation.py and make common util fcn

@@ -17,7 +17,7 @@ import skimage.io
 from scipy import misc
 from scipy.ndimage import center_of_mass
 from skimage import color
-from sklearn.externals._pilutil import imresize
+import cv2
 from tensorflow.keras import backend as K
 from tqdm import tqdm
 
@@ -869,7 +869,7 @@ def generate_individual_mouse_data(
 
                 el = color.rgb2gray(el)
 
-                el = imresize(el, 0.5)
+                el = cv2.resize(el, fx= 0.5, fy=0.5)
 
                 vid_new.append(el)
 

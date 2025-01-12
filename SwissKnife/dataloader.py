@@ -5,11 +5,11 @@ import multiprocessing
 import pickle
 
 import numpy as np
+import cv2
 from imblearn.under_sampling import RandomUnderSampler
 from joblib import Parallel, delayed
 from skimage.registration import optical_flow_tvl1
 from sklearn import preprocessing
-from sklearn.externals._pilutil import imresize
 from sklearn.utils import class_weight
 from tensorflow import keras
 from tqdm import tqdm
@@ -496,11 +496,11 @@ class Dataloader:
     def downscale_frames(self, factor=0.5):
         im_re = []
         for el in tqdm(self.x_train):
-            im_re.append(imresize(el, factor))
+            im_re.append(cv2.resize(el, fx=factor, fy=factor))
         self.x_train = np.asarray(im_re)
         im_re = []
         for el in tqdm(self.x_test):
-            im_re.append(imresize(el, factor))
+            im_re.append(cv2.resize(el, fx=factor, fy=factor))
         self.x_test = np.asarray(im_re)
 
     def prepare_data(

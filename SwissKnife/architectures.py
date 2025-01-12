@@ -37,7 +37,7 @@ from tensorflow.keras.layers import (
     concatenate,
 )
 from tensorflow.keras.models import Sequential
-from tensorflow.python.keras.applications.efficientnet import EfficientNetB1
+from tensorflow.keras.applications.efficientnet import EfficientNetB1
 
 
 def posenet(

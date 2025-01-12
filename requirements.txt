@@ -4,10 +4,10 @@ cython
 matplotlib
 imgaug
 IPython[all]
-scikit-learn==0.23.0
+scikit-learn
 imbalanced-learn
 imblearn
-git+https://github.com/aleju/imgaug@14b85e2209de0107c250e4d9dd6507dec1eae826
+git+https://github.com/plumonito/imgaug@0f9d2a1e543045d56bb806216ce503015471c04f
 importlib-metadata
 joblib
 jsonschema
@@ -18,4 +18,4 @@ Pillow
 scikit-image
 scipy
 scikit-video
-tensorflow-gpu==2.4.1
+tensorflow==2.18.0
