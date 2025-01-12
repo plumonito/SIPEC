@@ -16,8 +16,6 @@ import cv2
 import numpy as np
 import pandas as pd
 import skimage
-import skvideo
-import skvideo.io
 import tensorflow as tf
 import tensorflow.keras as keras
 from matplotlib import pyplot as plt
@@ -1028,11 +1026,21 @@ def pathForFile(paths, filename):
 
 def loadVideo(path, num_frames=None, greyscale=True):
     """load the video"""
-    if not num_frames is None:
-        return skvideo.io.vread(path, as_grey=greyscale, num_frames=num_frames)
-    else:
-        return skvideo.io.vread(path, as_grey=greyscale)
+    reader = cv2.VideoCapture(path)
+    if not reader.isOpened():
+        raise RuntimeError(f"Could not open video: {path}")
 
+    width = int(reader.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(reader.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    frame_count = int(reader.get(cv2.CAP_PROP_FRAME_COUNT)) if num_frames is None else num_frames
+    channels = 1 if greyscale else 3
+    frames = np.empty((frame_count,height,width,channels))
+
+    for fidx in range(frame_count):
+        result = reader.read()
+        assert result[0]
+        frames[fidx,:,:,:] = result[1]
+    return frames
 
 def load_config(path):
     params = {}

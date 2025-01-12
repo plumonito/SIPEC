@@ -9,7 +9,6 @@ import os
 import random
 import sys
 
-import skvideo
 from joblib import Parallel, delayed
 
 from argparse import ArgumentParser
@@ -718,7 +717,7 @@ def idresults_to_training_recurrent(
 
 
 def load_vid(basepath, vid, idx, batch_size=10000):
-    videodata = skvideo.io.vread(basepath + vid + ".mp4", as_grey=False)
+    videodata = loadVideo(basepath + vid + ".mp4", greyscale=False)
     videodata = videodata[idx * batch_size : (idx + 1) * batch_size]
     results_list = Parallel(
         n_jobs=-1, max_nbytes=None, backend="multiprocessing", verbose=40
