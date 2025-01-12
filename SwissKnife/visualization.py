@@ -11,7 +11,7 @@ import skvideo.io
 from tqdm import tqdm
 
 from SwissKnife.segmentation import mold_video
-from SwissKnife.utils import coords_to_masks, load_config, load_vgg_labels, loadVideo
+from SwissKnife.utils import coords_to_masks, load_config, load_vgg_labels, loadVideo, saveVideo
 
 
 def visualize_labels_on_video_cv(
@@ -269,6 +269,7 @@ def visualize_full_inference(
     display_coms=False,
     dimension=1024,
 ):
+    import cv2
     """TODO: Fill in description"""
     resulting_frames = []
     # prev_results = None
@@ -484,7 +485,7 @@ def visualize_full_inference(
                             cv2.LINE_AA,
                         )
                 except (TypeError, IndexError):
-                    continue
+                    pass
 
         else:
             name_ids = results[idx]["track_ids"]
@@ -609,7 +610,8 @@ def visualize_full_inference(
                     pass
 
         resulting_frames.append(frame)
-    skvideo.io.vwrite(results_sink + output_video_name, resulting_frames, verbosity=1)
+
+    saveVideo(results_sink + output_video_name, resulting_frames)
 
 
 def main():

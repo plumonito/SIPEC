@@ -1033,6 +1033,14 @@ def loadVideo(path, num_frames=None, greyscale=True):
     else:
         return skvideo.io.vread(path, as_grey=greyscale)
 
+def saveVideo(path, frames):
+    import cv2
+    # skvideo.io.vwrite(results_sink + output_video_name, resulting_frames, verbosity=1)
+    writer = cv2.VideoWriter(path, cv2.VideoWriter.fourcc(*"MP4V"),fps=30,frameSize=(frames[0].shape[1],frames[0].shape[0]))
+    for frame in frames:
+        writer.write(frame)
+    writer.release()
+
 
 def load_config(path):
     params = {}
