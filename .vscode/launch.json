@@ -1,0 +1,30 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Full inference test",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/home/dherrera/git/SIPEC/SwissKnife/full_inference.py",
+            "console": "integratedTerminal",
+            "preLaunchTask": "remove_test_dir",
+            "cwd": "${workspaceFolder}/SwissKnife",
+            "args": [
+                "--species",
+                "primate",
+                "--gpu","0","--segnet_path",
+                "/home/dherrera/Downloads/pretrained_networks/mask_rcnn_primate_0119.h5",
+                "--config",
+                "default",
+                "--video",
+                "/home/dherrera/git/zoo_vision/data/sample_video.mp4",
+                "--results_sink",
+                "/home/dherrera/Downloads/test"
+            ]
+        }
+    ]
+}

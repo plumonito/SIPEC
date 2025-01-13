@@ -2922,14 +2922,29 @@ class MaskRCNN:
         # TODO: can this be optimized to avoid duplicating the anchors?
         anchors = np.broadcast_to(anchors, (self.config.BATCH_SIZE,) + anchors.shape)
 
+        verbose = True
         if verbose:
+            import sys
+            np.set_printoptions(threshold=sys.maxsize)
             log("molded_images", molded_images)
+            print("images=")
+            print(repr(molded_images))
             log("image_metas", image_metas)
-            log("anchors", anchors)
+            print("image_metas=")
+            print(repr(image_metas))
+            # log("anchors", anchors)
+            print("anchors=")
+            print(repr(anchors))
         # Run object detection
         detections, _, _, mrcnn_mask, _, _, _ = self.keras_model.predict(
             [molded_images, image_metas, anchors], verbose=0
         )
+        print("detections=")
+        print(repr(detections))
+        if verbose:
+            log("detections",detections)
+            log("mrcnn_mask",mrcnn_mask)
+        raise RuntimeError("Segment done")
         # Process detections
         results = []
         for i, image in enumerate(images):

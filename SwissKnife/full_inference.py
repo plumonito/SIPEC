@@ -345,7 +345,7 @@ def main():
     if not results_sink[-1] == "/":
         results_sink += "/"
 
-    setGPU(gpu_name)
+    # setGPU(gpu_name)
     check_directory(results_sink)
 
     inference_cfg = load_config("../configs/inference/" + config)
@@ -387,6 +387,12 @@ def main():
     ]
     SegNet.inference_config.__init__()
     SegNet.set_inference(model_path=segnet_path)
+
+    # import tensorflow as tf
+
+    # model = SegNet.model.keras_model
+    # tf.saved_model.save(model, "/home/dherrera/Downloads/test/")
+    # return
 
     networks = {"SegNet": SegNet}
 

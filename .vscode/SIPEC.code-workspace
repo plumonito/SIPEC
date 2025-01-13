@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../imgaug"
+		},
+		{
+			"path": "../../imagecorruptions"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"ros.distro": "jazzy"
+	}
+}
